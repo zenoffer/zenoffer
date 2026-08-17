@@ -1,94 +1,144 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZenOffer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZenOffer</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #050505;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #050505;
+  color: white;
+  min-height: 100vh;
+}
 
-    .app {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      padding: 35px 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
+.app {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 35px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
 
-    .logo {
-      font-size: 64px;
-      font-weight: 900;
-      color: #f5b82e;
-      margin-bottom: 10px;
-    }
+.logo {
+  font-size: 80px;
+  font-weight: 900;
+  color: #f5b82e;
+  margin-bottom: 5px;
+}
 
-    .name {
-      font-size: 42px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+.name {
+  font-size: 42px;
+  font-weight: bold;
+}
 
-    .name span {
-      color: #f5b82e;
-    }
+.name span {
+  color: #f5b82e;
+}
 
-    .tagline {
-      color: #ddd;
-      font-size: 16px;
-      margin-bottom: 55px;
-    }
+.tagline {
+  color: #ddd;
+  margin-top: 8px;
+  margin-bottom: 55px;
+}
 
-    .btn {
-      width: 100%;
-      padding: 16px;
-      border-radius: 12px;
-      border: none;
-      font-size: 17px;
-      font-weight: bold;
-      margin-top: 15px;
-      cursor: pointer;
-    }
+button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 15px;
+  cursor: pointer;
+}
 
-    .login {
-      background: #f5b82e;
-      color: #050505;
-    }
+.login {
+  background: #f5b82e;
+  border: none;
+  color: #050505;
+}
 
-    .signup {
-      background: transparent;
-      color: white;
-      border: 1px solid #f5b82e;
-    }
+.signup {
+  background: transparent;
+  border: 1px solid #f5b82e;
+  color: white;
+}
 
-    .footer {
-      margin-top: 35px;
-      font-size: 12px;
-      color: #888;
-    }
-  </style>
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #f5b82e;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+.phone {
+  display: flex;
+  gap: 8px;
+}
+
+.code {
+  width: 75px;
+  padding: 15px 8px;
+  background: #151515;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  background: #151515;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.continue {
+  background: #f5b82e;
+  border: none;
+  color: #050505;
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
+
+  <!-- WELCOME -->
+  <div id="welcome" class="screen active">
 
     <div class="logo">Z</div>
 
@@ -100,29 +150,128 @@
       Speedy Deals, Happy Feels
     </div>
 
-    <button class="btn login" onclick="login()">
+    <button class="login" onclick="showLogin()">
       Login
     </button>
 
-    <button class="btn signup" onclick="signup()">
+    <button class="signup" onclick="showSignup()">
       Sign Up
     </button>
 
-    <div class="footer">
-      Offers • Wholesale • Bulk Orders
+  </div>
+
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="screen">
+
+    <button class="back" onclick="goBack()">← Back</button>
+
+    <h2>Welcome Back</h2>
+
+    <div class="subtitle">
+      Login to ZenOffer
     </div>
+
+    <div class="phone">
+
+      <div class="code">
+        +91
+      </div>
+
+      <input
+        type="tel"
+        id="loginPhone"
+        placeholder="Mobile Number"
+        maxlength="10"
+      >
+
+    </div>
+
+    <button class="continue" onclick="sendOTP('login')">
+      Send OTP
+    </button>
 
   </div>
 
-  <script>
-    function login() {
-      alert("ZenOffer Login");
-    }
 
-    function signup() {
-      alert("ZenOffer Sign Up");
-    }
-  </script>
+  <!-- SIGN UP -->
+  <div id="signupScreen" class="screen">
+
+    <button class="back" onclick="goBack()">← Back</button>
+
+    <h2>Create Account</h2>
+
+    <div class="subtitle">
+      Join ZenOffer
+    </div>
+
+    <div class="phone">
+
+      <div class="code">
+        +91
+      </div>
+
+      <input
+        type="tel"
+        id="signupPhone"
+        placeholder="Mobile Number"
+        maxlength="10"
+      >
+
+    </div>
+
+    <button class="continue" onclick="sendOTP('signup')">
+      Send OTP
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function hideAll() {
+  document.querySelectorAll(".screen").forEach(function(screen) {
+    screen.classList.remove("active");
+  });
+}
+
+function showLogin() {
+  hideAll();
+  document.getElementById("loginScreen").classList.add("active");
+}
+
+function showSignup() {
+  hideAll();
+  document.getElementById("signupScreen").classList.add("active");
+}
+
+function goBack() {
+  hideAll();
+  document.getElementById("welcome").classList.add("active");
+}
+
+function sendOTP(type) {
+
+  let phone;
+
+  if (type === "login") {
+    phone = document.getElementById("loginPhone").value;
+  } else {
+    phone = document.getElementById("signupPhone").value;
+  }
+
+  if (phone.length !== 10) {
+    alert("Please enter a valid 10-digit mobile number.");
+    return;
+  }
+
+  alert("OTP will be sent to +91 " + phone);
+
+}
+
+</script>
 
 </body>
 </html>
