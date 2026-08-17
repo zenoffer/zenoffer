@@ -129,7 +129,45 @@ input {
   border: none;
   color: #050505;
 }
+.language-list {
+  margin-top: 25px;
+  max-height: 360px;
+  overflow-y: auto;
+}
 
+.language-option {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: #151515;
+  border: 1px solid #333;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.language-option input {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  accent-color: #f5b82e;
+}
+
+.language-option span {
+  font-size: 16px;
+}
+
+.language-option:has(input:checked) {
+  border-color: #f5b82e;
+}
+
+.language-continue {
+  background: #f5b82e;
+  color: #050505;
+  border: none;
+  margin-top: 20px;
+}
 </style>
 </head>
 
