@@ -1,172 +1,693 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 <title>ZenOffer</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #050505;
-  color: white;
-  min-height: 100vh;
+body{
+  font-family:Arial,sans-serif;
+  background:#050505;
+  color:#fff;
 }
 
-.app {
-  max-width: 430px;
-  min-height: 100vh;
-  margin: auto;
-  padding: 35px 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+button,input,select,textarea{
+  font:inherit;
 }
 
-.logo {
-  font-size: 80px;
-  font-weight: 900;
-  color: #f5b82e;
-  margin-bottom: 5px;
+button{
+  cursor:pointer;
 }
 
-.name {
-  font-size: 42px;
-  font-weight: bold;
+.app{
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:#080808;
+  overflow:hidden;
 }
 
-.name span {
-  color: #f5b82e;
+.screen{
+  display:none;
+  min-height:100vh;
 }
 
-.tagline {
-  color: #ddd;
-  margin-top: 8px;
-  margin-bottom: 55px;
+.screen.active{
+  display:block;
 }
 
-button {
-  width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 17px;
-  font-weight: bold;
-  margin-top: 15px;
-  cursor: pointer;
+/* ---------- COMMON ---------- */
+
+.gold{
+  color:#f5b82e;
 }
 
-.login {
-  background: #f5b82e;
-  border: none;
-  color: #050505;
+.btn{
+  width:100%;
+  padding:15px;
+  border-radius:12px;
+  border:none;
+  font-weight:bold;
+  margin-top:12px;
 }
 
-.signup {
-  background: transparent;
-  border: 1px solid #f5b82e;
-  color: white;
+.btn-gold{
+  background:#f5b82e;
+  color:#050505;
 }
 
-.screen {
-  display: none;
+.btn-dark{
+  background:#151515;
+  color:#fff;
+  border:1px solid #333;
 }
 
-.screen.active {
-  display: block;
+.btn-outline{
+  background:transparent;
+  color:#f5b82e;
+  border:1px solid #f5b82e;
 }
 
-.back {
-  background: none;
-  border: none;
-  color: #f5b82e;
-  margin-bottom: 20px;
+.input{
+  width:100%;
+  padding:15px;
+  background:#151515;
+  border:1px solid #333;
+  color:#fff;
+  border-radius:10px;
+  margin-top:10px;
+  outline:none;
 }
 
-h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
+.input:focus{
+  border-color:#f5b82e;
 }
 
-.subtitle {
-  color: #aaa;
-  margin-bottom: 30px;
+.page{
+  padding:20px;
+  padding-bottom:90px;
 }
 
-.phone {
-  display: flex;
-  gap: 8px;
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
 }
 
-.code {
-  width: 75px;
-  padding: 15px 8px;
-  background: #151515;
-  border: 1px solid #333;
-  color: white;
-  border-radius: 10px;
-  text-align: center;
+.header-title{
+  font-size:24px;
+  font-weight:bold;
 }
 
-input {
-  width: 100%;
-  padding: 15px;
-  background: #151515;
-  border: 1px solid #333;
-  color: white;
-  border-radius: 10px;
-  font-size: 16px;
+.back{
+  background:none;
+  border:none;
+  color:#f5b82e;
+  font-size:16px;
 }
 
-.continue {
-  background: #f5b82e;
-  border: none;
-  color: #050505;
-}
-.language-list {
-  margin-top: 25px;
-  max-height: 360px;
-  overflow-y: auto;
+/* ---------- WELCOME ---------- */
+
+.welcome{
+  min-height:100vh;
+  padding:30px 25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 }
 
-.language-option {
-  display: flex;
-  align-items: center;
-  padding: 14px;
-  margin-bottom: 10px;
-  background: #151515;
-  border: 1px solid #333;
-  border-radius: 12px;
-  cursor: pointer;
-  text-align: left;
+.logo-z{
+  font-size:100px;
+  line-height:1;
+  font-weight:900;
+  color:#f5b82e;
+  text-shadow:0 0 25px rgba(245,184,46,.2);
 }
 
-.language-option input {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  accent-color: #f5b82e;
+.brand{
+  font-size:44px;
+  font-weight:bold;
+  margin-top:10px;
 }
 
-.language-option span {
-  font-size: 16px;
+.brand span{
+  color:#f5b82e;
 }
 
-.language-option:has(input:checked) {
-  border-color: #f5b82e;
+.tagline{
+  color:#ccc;
+  margin-top:8px;
+  margin-bottom:50px;
 }
 
-.language-continue {
-  background: #f5b82e;
-  color: #050505;
-  border: none;
-  margin-top: 20px;
+/* ---------- AUTH ---------- */
+
+.auth{
+  padding:35px 25px;
+}
+
+.auth-logo{
+  text-align:center;
+  margin:30px 0;
+}
+
+.auth-logo .logo-z{
+  font-size:70px;
+}
+
+.auth-logo .brand{
+  font-size:36px;
+}
+
+.auth h2{
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:#999;
+  margin-bottom:25px;
+}
+
+.phone-row{
+  display:flex;
+  gap:8px;
+}
+
+.country-code{
+  width:75px;
+  background:#151515;
+  border:1px solid #333;
+  color:#fff;
+  border-radius:10px;
+  padding:15px 8px;
+  text-align:center;
+}
+
+.phone-row .input{
+  margin-top:0;
+}
+
+/* ---------- OTP ---------- */
+
+.otp-row{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
+}
+
+.otp{
+  width:20%;
+  padding:14px 4px;
+  text-align:center;
+  background:#151515;
+  color:#fff;
+  border:1px solid #333;
+  border-radius:10px;
+}
+
+/* ---------- LANGUAGE ---------- */
+
+.language-list{
+  max-height:55vh;
+  overflow-y:auto;
+}
+
+.language-option{
+  display:flex;
+  align-items:center;
+  padding:14px;
+  margin-bottom:10px;
+  background:#151515;
+  border:1px solid #333;
+  border-radius:12px;
+}
+
+.language-option input{
+  width:20px;
+  height:20px;
+  margin-right:12px;
+  accent-color:#f5b82e;
+}
+
+/* ---------- HOME ---------- */
+
+.home-header{
+  padding:20px 20px 10px;
+}
+
+.home-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.small-brand{
+  font-size:27px;
+  font-weight:bold;
+}
+
+.small-brand span{
+  color:#f5b82e;
+}
+
+.location{
+  color:#aaa;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.icon-btn{
+  background:#151515;
+  border:1px solid #333;
+  color:#fff;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+
+.search-box{
+  display:flex;
+  background:#151515;
+  border:1px solid #333;
+  border-radius:12px;
+  margin-top:18px;
+  overflow:hidden;
+}
+
+.search-box input{
+  flex:1;
+  background:none;
+  border:none;
+  color:#fff;
+  padding:14px;
+  outline:none;
+}
+
+.search-btn{
+  width:50px;
+  border:none;
+  background:#f5b82e;
+}
+
+.section{
+  padding:10px 20px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0;
+}
+
+.section-title h3{
+  font-size:19px;
+}
+
+.see-all{
+  color:#f5b82e;
+  font-size:13px;
+}
+
+/* ---------- CATEGORIES ---------- */
+
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.category{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:13px 5px;
+  text-align:center;
+  font-size:12px;
+}
+
+.category-icon{
+  font-size:25px;
+  margin-bottom:6px;
+}
+
+/* ---------- PRODUCTS ---------- */
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.product-card{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  overflow:hidden;
+}
+
+.product-image{
+  height:145px;
+  background:linear-gradient(135deg,#222,#111);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+}
+
+.product-info{
+  padding:12px;
+}
+
+.product-name{
+  font-weight:bold;
+  font-size:14px;
+  line-height:1.3;
+}
+
+.old-price{
+  color:#777;
+  text-decoration:line-through;
+  font-size:12px;
+  margin-top:6px;
+}
+
+.price{
+  color:#f5b82e;
+  font-size:19px;
+  font-weight:bold;
+  margin-top:3px;
+}
+
+.discount{
+  display:inline-block;
+  color:#65d68a;
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* ---------- OFFER BANNER ---------- */
+
+.offer-banner{
+  margin:10px 20px;
+  padding:20px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#171717,#292010);
+  border:1px solid #765915;
+}
+
+.offer-banner h2{
+  color:#f5b82e;
+  font-size:22px;
+}
+
+.offer-banner p{
+  color:#ccc;
+  margin-top:6px;
+  font-size:13px;
+}
+
+/* ---------- HOME BOTTOM NAV ---------- */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:480px;
+  height:68px;
+  background:#101010;
+  border-top:1px solid #292929;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:50;
+}
+
+.nav-item{
+  background:none;
+  border:none;
+  color:#777;
+  font-size:11px;
+  text-align:center;
+}
+
+.nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+.nav-item.active{
+  color:#f5b82e;
+}
+
+/* ---------- PRODUCT PAGE ---------- */
+
+.product-large-image{
+  height:280px;
+  background:linear-gradient(135deg,#222,#111);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:90px;
+  border-radius:16px;
+}
+
+.product-title-large{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:18px;
+}
+
+.rating{
+  color:#f5b82e;
+  margin-top:8px;
+}
+
+.price-large{
+  font-size:30px;
+  color:#f5b82e;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.seller-box{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:15px;
+  margin-top:18px;
+}
+
+/* ---------- SELLER ---------- */
+
+.trial{
+  background:#151515;
+  border:1px solid #f5b82e;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.trial-title{
+  color:#f5b82e;
+  font-size:19px;
+  font-weight:bold;
+}
+
+.trial p{
+  color:#bbb;
+  margin-top:7px;
+  font-size:13px;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.dashboard-card{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:18px;
+}
+
+.dashboard-card .number{
+  font-size:25px;
+  font-weight:bold;
+  color:#f5b82e;
+}
+
+.dashboard-card p{
+  color:#999;
+  margin-top:5px;
+  font-size:13px;
+}
+
+/* ---------- ADD PRODUCT ---------- */
+
+.form-label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:5px;
+  color:#ddd;
+  font-size:14px;
+}
+
+textarea.input{
+  min-height:100px;
+  resize:vertical;
+}
+
+select.input{
+  appearance:auto;
+}
+
+/* ---------- BULK ---------- */
+
+.bulk-box{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:18px;
+  margin-top:15px;
+}
+
+.bulk-row{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #292929;
+}
+
+.bulk-row:last-child{
+  border-bottom:none;
+}
+
+.bulk-price{
+  color:#f5b82e;
+  font-weight:bold;
+}
+
+/* ---------- CHAT ---------- */
+
+.chat-box{
+  height:60vh;
+  overflow-y:auto;
+  padding:10px 0;
+}
+
+.message{
+  max-width:78%;
+  padding:11px 14px;
+  border-radius:14px;
+  margin-bottom:10px;
+}
+
+.message.seller{
+  background:#202020;
+}
+
+.message.buyer{
+  background:#f5b82e;
+  color:#050505;
+  margin-left:auto;
+}
+
+.chat-input{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.chat-input input{
+  flex:1;
+}
+
+/* ---------- PROFILE ---------- */
+
+.profile-head{
+  text-align:center;
+  padding:25px 0;
+}
+
+.avatar{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:#f5b82e;
+  color:#050505;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto;
+  font-size:32px;
+  font-weight:bold;
+}
+
+.profile-name{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.profile-menu{
+  background:#151515;
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.profile-menu button{
+  width:100%;
+  background:none;
+  border:none;
+  border-bottom:1px solid #292929;
+  color:#fff;
+  padding:17px;
+  text-align:left;
+}
+
+.profile-menu button:last-child{
+  border-bottom:none;
+}
+
+/* ---------- TOAST ---------- */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%);
+  background:#f5b82e;
+  color:#050505;
+  padding:12px 18px;
+  border-radius:20px;
+  font-size:13px;
+  display:none;
+  z-index:100;
+}
+
+@media(max-width:360px){
+  .category-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
 }
 </style>
 </head>
@@ -175,12 +696,15 @@ input {
 
 <div class="app">
 
-  <!-- WELCOME -->
-  <div id="welcome" class="screen active">
+<!-- ================= WELCOME ================= -->
 
-    <div class="logo">Z</div>
+<section id="welcomeScreen" class="screen active">
 
-    <div class="name">
+  <div class="welcome">
+
+    <div class="logo-z">Z</div>
+
+    <div class="brand">
       Zen<span>Offer</span>
     </div>
 
@@ -188,126 +712,1652 @@ input {
       Speedy Deals, Happy Feels
     </div>
 
-    <button class="login" onclick="showLogin()">
+    <button class="btn btn-gold" onclick="showScreen('loginScreen')">
       Login
     </button>
 
-    <button class="signup" onclick="showSignup()">
+    <button class="btn btn-outline" onclick="showScreen('signupScreen')">
       Sign Up
     </button>
 
   </div>
 
+</section>
 
-  <!-- LOGIN -->
-  <div id="loginScreen" class="screen">
 
-    <button class="back" onclick="goBack()">← Back</button>
+<!-- ================= LOGIN ================= -->
+
+<section id="loginScreen" class="screen">
+
+  <div class="auth">
+
+    <button class="back" onclick="showScreen('welcomeScreen')">
+      ← Back
+    </button>
+
+    <div class="auth-logo">
+      <div class="logo-z">Z</div>
+      <div class="brand">
+        Zen<span>Offer</span>
+      </div>
+    </div>
 
     <h2>Welcome Back</h2>
 
-    <div class="subtitle">
-      Login to ZenOffer
-    </div>
+    <p class="subtitle">
+      Login using your mobile number
+    </p>
 
-    <div class="phone">
+    <div class="phone-row">
 
-      <div class="code">
-        +91
-      </div>
+      <div class="country-code">+91</div>
 
       <input
-        type="tel"
         id="loginPhone"
-        placeholder="Mobile Number"
+        class="input"
+        type="tel"
         maxlength="10"
+        placeholder="Mobile Number"
       >
 
     </div>
 
-    <button class="continue" onclick="sendOTP('login')">
+    <button class="btn btn-gold" onclick="sendOTP('login')">
       Send OTP
     </button>
 
   </div>
 
+</section>
 
-  <!-- SIGN UP -->
-  <div id="signupScreen" class="screen">
 
-    <button class="back" onclick="goBack()">← Back</button>
+<!-- ================= SIGN UP ================= -->
+
+<section id="signupScreen" class="screen">
+
+  <div class="auth">
+
+    <button class="back" onclick="showScreen('welcomeScreen')">
+      ← Back
+    </button>
+
+    <div class="auth-logo">
+      <div class="logo-z">Z</div>
+      <div class="brand">
+        Zen<span>Offer</span>
+      </div>
+    </div>
 
     <h2>Create Account</h2>
 
-    <div class="subtitle">
-      Join ZenOffer
-    </div>
+    <p class="subtitle">
+      Join ZenOffer today
+    </p>
 
-    <div class="phone">
+    <div class="phone-row">
 
-      <div class="code">
-        +91
-      </div>
+      <div class="country-code">+91</div>
 
       <input
-        type="tel"
         id="signupPhone"
-        placeholder="Mobile Number"
+        class="input"
+        type="tel"
         maxlength="10"
+        placeholder="Mobile Number"
       >
 
     </div>
 
-    <button class="continue" onclick="sendOTP('signup')">
+    <button class="btn btn-gold" onclick="sendOTP('signup')">
       Send OTP
     </button>
 
   </div>
+
+</section>
+
+
+<!-- ================= OTP ================= -->
+
+<section id="otpScreen" class="screen">
+
+  <div class="auth">
+
+    <button class="back" onclick="showScreen('welcomeScreen')">
+      ← Back
+    </button>
+
+    <h2>Verify Mobile</h2>
+
+    <p class="subtitle">
+      Enter the 4-digit OTP sent to your mobile number
+    </p>
+
+    <div class="otp-row">
+
+      <input class="otp" maxlength="1" oninput="moveOTP(this,1)">
+      <input class="otp" maxlength="1" oninput="moveOTP(this,2)">
+      <input class="otp" maxlength="1" oninput="moveOTP(this,3)">
+      <input class="otp" maxlength="1" oninput="moveOTP(this,4)">
+
+    </div>
+
+    <button class="btn btn-gold" onclick="verifyOTP()">
+      Verify OTP
+    </button>
+
+    <button class="btn btn-dark" onclick="showToast('OTP resent')">
+      Resend OTP
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= LANGUAGE ================= -->
+
+<section id="languageScreen" class="screen">
+
+  <div class="page">
+
+    <h2>Choose Your Language</h2>
+
+    <p class="subtitle">
+      Select the language you prefer
+    </p>
+
+    <div class="language-list">
+
+      <label class="language-option">
+        <input type="radio" name="language" value="English" checked>
+        🇬🇧 English
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Tamil">
+        🇮🇳 தமிழ்
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Hindi">
+        🇮🇳 हिन्दी
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Telugu">
+        🇮🇳 తెలుగు
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Malayalam">
+        🇮🇳 മലയാളം
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Kannada">
+        🇮🇳 ಕನ್ನಡ
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Bengali">
+        🇮🇳 বাংলা
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Spanish">
+        🇪🇸 Español
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Arabic">
+        🇸🇦 العربية
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Chinese">
+        🇨🇳 中文
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Japanese">
+        🇯🇵 日本語
+      </label>
+
+      <label class="language-option">
+        <input type="radio" name="language" value="Korean">
+        🇰🇷 한국어
+      </label>
+
+    </div>
+
+    <button class="btn btn-gold" onclick="saveLanguage()">
+      Continue →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PERMISSIONS ================= -->
+
+<section id="permissionsScreen" class="screen">
+
+  <div class="welcome">
+
+    <div style="font-size:65px">🔔</div>
+
+    <h2 style="margin-top:20px">
+      Stay Updated
+    </h2>
+
+    <p class="subtitle">
+      Get nearby offers, price drops and order updates.
+    </p>
+
+    <button class="btn btn-gold" onclick="requestLocation()">
+      Allow Notifications
+    </button>
+
+    <button class="btn btn-dark" onclick="requestLocation()">
+      Maybe Later
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= LOCATION ================= -->
+
+<section id="locationScreen" class="screen">
+
+  <div class="welcome">
+
+    <div style="font-size:65px">📍</div>
+
+    <h2 style="margin-top:20px">
+      Discover Offers Near You
+    </h2>
+
+    <p class="subtitle">
+      Find nearby shops, offers and wholesale sellers.
+    </p>
+
+    <button class="btn btn-gold" onclick="enableLocation()">
+      Turn On Location
+    </button>
+
+    <button class="btn btn-dark" onclick="goHome()">
+      Maybe Later
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="homeScreen" class="screen">
+
+  <div class="home-header">
+
+    <div class="home-top">
+
+      <div>
+        <div class="small-brand">
+          Zen<span>Offer</span>
+        </div>
+
+        <div class="location" id="locationText">
+          📍 Location not selected
+        </div>
+      </div>
+
+      <button class="icon-btn" onclick="showScreen('profileScreen')">
+        👤
+      </button>
+
+    </div>
+
+    <div class="search-box">
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search products, offers, wholesale..."
+        onkeydown="searchEnter(event)"
+      >
+
+      <button class="search-btn" onclick="searchProducts()">
+        🔍
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="offer-banner">
+
+    <h2>🔥 Hot Offers</h2>
+
+    <p>
+      Discover great deals from shops and online sellers.
+    </p>
+
+    <button class="btn btn-gold" onclick="showScreen('offersScreen')">
+      Explore Offers
+    </button>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="section-title">
+      <h3>All Categories</h3>
+      <button class="see-all" onclick="showScreen('categoriesScreen')">
+        View All
+      </button>
+    </div>
+
+    <div class="category-grid">
+
+      <button class="category" onclick="categorySearch('Fashion')">
+        <div class="category-icon">👕</div>
+        Fashion
+      </button>
+
+      <button class="category" onclick="categorySearch('Electronics')">
+        <div class="category-icon">📱</div>
+        Electronics
+      </button>
+
+      <button class="category" onclick="categorySearch('Shoes')">
+        <div class="category-icon">👟</div>
+        Shoes
+      </button>
+
+      <button class="category" onclick="categorySearch('Home')">
+        <div class="category-icon">🏠</div>
+        Home
+      </button>
+
+      <button class="category" onclick="categorySearch('Beauty')">
+        <div class="category-icon">💄</div>
+        Beauty
+      </button>
+
+      <button class="category" onclick="categorySearch('Food')">
+        <div class="category-icon">🍎</div>
+        Food
+      </button>
+
+      <button class="category" onclick="categorySearch('Automotive')">
+        <div class="category-icon">🚗</div>
+        Auto
+      </button>
+
+      <button class="category" onclick="categorySearch('Business')">
+        <div class="category-icon">🏢</div>
+        Business
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="section-title">
+      <h3>🔥 Today's Offers</h3>
+      <button class="see-all" onclick="showScreen('offersScreen')">
+        See All
+      </button>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card" onclick="openProduct('Premium T-Shirt')">
+
+        <div class="product-image">👕</div>
+
+        <div class="product-info">
+          <div class="product-name">
+            Premium T-Shirt
+          </div>
+
+          <div class="old-price">
+            ₹999
+          </div>
+
+          <div class="price">
+            ₹599
+          </div>
+
+          <div class="discount">
+            40% OFF
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="product-card" onclick="openProduct('Wireless Earbuds')">
+
+        <div class="product-image">🎧</div>
+
+        <div class="product-info">
+          <div class="product-name">
+            Wireless Earbuds
+          </div>
+
+          <div class="old-price">
+            ₹1,999
+          </div>
+
+          <div class="price">
+            ₹899
+          </div>
+
+          <div class="discount">
+            55% OFF
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="section-title">
+      <h3>📦 Wholesale & Bulk</h3>
+      <button class="see-all" onclick="showScreen('wholesaleScreen')">
+        Explore
+      </button>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card" onclick="openProduct('Bulk T-Shirts')">
+        <div class="product-image">👕</div>
+
+        <div class="product-info">
+          <div class="product-name">
+            Bulk T-Shirts
+          </div>
+
+          <div class="price">
+            From ₹180
+          </div>
+
+          <div class="discount">
+            MOQ 50 pcs
+          </div>
+        </div>
+      </div>
+
+
+      <div class="product-card" onclick="openProduct('Wholesale Bags')">
+        <div class="product-image">👜</div>
+
+        <div class="product-info">
+          <div class="product-name">
+            Wholesale Bags
+          </div>
+
+          <div class="price">
+            From ₹120
+          </div>
+
+          <div class="discount">
+            MOQ 100 pcs
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BOTTOM NAV -->
+
+  <div class="bottom-nav">
+
+    <button class="nav-item active" onclick="goHome()">
+      <span class="nav-icon">🏠</span>
+      Home
+    </button>
+
+    <button class="nav-item" onclick="showScreen('categoriesScreen')">
+      <span class="nav-icon">🗂️</span>
+      Categories
+    </button>
+
+    <button class="nav-item" onclick="showScreen('offersScreen')">
+      <span class="nav-icon">🏷️</span>
+      Offers
+    </button>
+
+    <button class="nav-item" onclick="showScreen('ordersScreen')">
+      <span class="nav-icon">📦</span>
+      Orders
+    </button>
+
+    <button class="nav-item" onclick="showScreen('profileScreen')">
+      <span class="nav-icon">👤</span>
+      Profile
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section id="categoriesScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        All Categories
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="category-grid">
+
+      <button class="category" onclick="categorySearch('Fashion')">👕<br>Fashion</button>
+      <button class="category" onclick="categorySearch('Shoes')">👟<br>Shoes</button>
+      <button class="category" onclick="categorySearch('Electronics')">📱<br>Electronics</button>
+      <button class="category" onclick="categorySearch('Computer')">💻<br>Computer</button>
+      <button class="category" onclick="categorySearch('Home')">🏠<br>Home</button>
+      <button class="category" onclick="categorySearch('Furniture')">🛋️<br>Furniture</button>
+      <button class="category" onclick="categorySearch('Beauty')">💄<br>Beauty</button>
+      <button class="category" onclick="categorySearch('Food')">🍎<br>Food</button>
+      <button class="category" onclick="categorySearch('Grocery')">🛒<br>Grocery</button>
+      <button class="category" onclick="categorySearch('Kids')">🧸<br>Kids</button>
+      <button class="category" onclick="categorySearch('Automotive')">🚗<br>Automotive</button>
+      <button class="category" onclick="categorySearch('Business')">🏢<br>Business</button>
+      <button class="category" onclick="categorySearch('Packaging')">📦<br>Packaging</button>
+      <button class="category" onclick="categorySearch('Industrial')">🏭<br>Industrial</button>
+      <button class="category" onclick="categorySearch('Beauty')">💅<br>Personal Care</button>
+      <button class="category" onclick="categorySearch('Other')">➕<br>Other</button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= OFFERS ================= -->
+
+<section id="offersScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Offers
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card" onclick="openProduct('Premium T-Shirt')">
+        <div class="product-image">👕</div>
+
+        <div class="product-info">
+          <div class="product-name">Premium T-Shirt</div>
+          <div class="old-price">₹999</div>
+          <div class="price">₹599</div>
+          <div class="discount">40% OFF</div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="openProduct('Wireless Earbuds')">
+        <div class="product-image">🎧</div>
+
+        <div class="product-info">
+          <div class="product-name">Wireless Earbuds</div>
+          <div class="old-price">₹1,999</div>
+          <div class="price">₹899</div>
+          <div class="discount">55% OFF</div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="openProduct('Running Shoes')">
+        <div class="product-image">👟</div>
+
+        <div class="product-info">
+          <div class="product-name">Running Shoes</div>
+          <div class="old-price">₹2,999</div>
+          <div class="price">₹1,499</div>
+          <div class="discount">50% OFF</div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="openProduct('Smart Watch')">
+        <div class="product-image">⌚</div>
+
+        <div class="product-info">
+          <div class="product-name">Smart Watch</div>
+          <div class="old-price">₹3,999</div>
+          <div class="price">₹1,999</div>
+          <div class="discount">50% OFF</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= WHOLESALE ================= -->
+
+<section id="wholesaleScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Wholesale & Bulk
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="bulk-box">
+
+      <h3>👕 Bulk T-Shirts</h3>
+
+      <p class="subtitle">
+        Perfect for clothing shops and resellers
+      </p>
+
+      <div class="bulk-row">
+        <span>50+ pcs</span>
+        <span class="bulk-price">₹180 / pc</span>
+      </div>
+
+      <div class="bulk-row">
+        <span>100+ pcs</span>
+        <span class="bulk-price">₹165 / pc</span>
+      </div>
+
+      <div class="bulk-row">
+        <span>500+ pcs</span>
+        <span class="bulk-price">₹145 / pc</span>
+      </div>
+
+      <button class="btn btn-gold" onclick="openBulkOrder('Bulk T-Shirts')">
+        Request Bulk Order
+      </button>
+
+    </div>
+
+
+    <div class="bulk-box">
+
+      <h3>👜 Wholesale Bags</h3>
+
+      <p class="subtitle">
+        Wholesale bags for retailers
+      </p>
+
+      <div class="bulk-row">
+        <span>100+ pcs</span>
+        <span class="bulk-price">₹120 / pc</span>
+      </div>
+
+      <div class="bulk-row">
+        <span>500+ pcs</span>
+        <span class="bulk-price">₹105 / pc</span>
+      </div>
+
+      <button class="btn btn-gold" onclick="openBulkOrder('Wholesale Bags')">
+        Request Bulk Order
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PRODUCT ================= -->
+
+<section id="productScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+      <button class="back" onclick="goHome()">← Back</button>
+      <div class="header-title">Product</div>
+      <div></div>
+    </div>
+
+    <div class="product-large-image" id="productLargeImage">
+      👕
+    </div>
+
+    <div class="product-title-large" id="productTitle">
+      Premium T-Shirt
+    </div>
+
+    <div class="rating">
+      ⭐ 4.8 • Verified Seller
+    </div>
+
+    <div class="old-price">
+      ₹999
+    </div>
+
+    <div class="price-large">
+      ₹599
+    </div>
+
+    <div class="discount">
+      40% OFF
+    </div>
+
+    <div class="seller-box">
+
+      <h3>🏪 ABC Fashion Store</h3>
+
+      <p style="color:#999;margin-top:6px">
+        ✓ Verified Seller
+      </p>
+
+      <p style="color:#999;margin-top:5px">
+        📍 Nearby Seller
+      </p>
+
+      <button class="btn btn-outline" onclick="openChat()">
+        💬 Contact Seller
+      </button>
+
+    </div>
+
+    <button class="btn btn-gold" onclick="placeOrder()">
+      🛒 Buy Now
+    </button>
+
+    <button class="btn btn-outline" onclick="openBulkOrder('Premium T-Shirt')">
+      📦 Bulk Order
+    </button>
+
+    <button class="btn btn-dark" onclick="showToast('Wholesale price request sent')">
+      Get Wholesale Price
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= BULK ORDER ================= -->
+
+<section id="bulkOrderScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Bulk Order
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <p class="subtitle" id="bulkProductName">
+      Product
+    </p>
+
+    <label class="form-label">
+      Quantity
+    </label>
+
+    <input
+      id="bulkQuantity"
+      class="input"
+      type="number"
+      placeholder="Example: 500"
+    >
+
+    <label class="form-label">
+      Delivery Location
+    </label>
+
+    <input
+      id="bulkLocation"
+      class="input"
+      type="text"
+      placeholder="City / Country"
+    >
+
+    <label class="form-label">
+      Requirements
+    </label>
+
+    <textarea
+      id="bulkRequirements"
+      class="input"
+      placeholder="Size, color, customization etc."
+    ></textarea>
+
+    <button class="btn btn-gold" onclick="sendBulkRequest()">
+      Send Request
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CHAT ================= -->
+
+<section id="chatScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="showScreen('productScreen')">
+        ← Back
+      </button>
+
+      <div class="header-title">
+        Seller Chat
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="chat-box" id="chatBox">
+
+      <div class="message seller">
+        Hello! How can I help you?
+      </div>
+
+      <div class="message seller">
+        We also accept bulk orders.
+      </div>
+
+    </div>
+
+    <div class="chat-input">
+
+      <input
+        id="chatMessage"
+        class="input"
+        placeholder="Type a message..."
+      >
+
+      <button
+        class="btn btn-gold"
+        style="width:90px;margin-top:10px"
+        onclick="sendMessage()"
+      >
+        Send
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SELLER ================= -->
+
+<section id="sellerScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Seller Dashboard
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="trial">
+
+      <div class="trial-title">
+        🎁 2 Months FREE Trial
+      </div>
+
+      <p>
+        0% ZenOffer commission during your first 2 months.
+      </p>
+
+      <p>
+        Sell products, create offers and receive bulk orders.
+      </p>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+      <div class="dashboard-card">
+        <div class="number">0</div>
+        <p>Products</p>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="number">0</div>
+        <p>Orders</p>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="number">0</div>
+        <p>Views</p>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="number">₹0</div>
+        <p>Earnings</p>
+      </div>
+
+    </div>
+
+    <button class="btn btn-gold" onclick="showScreen('addProductScreen')">
+      ➕ Add Product
+    </button>
+
+    <button class="btn btn-outline" onclick="showToast('Offer creation opened')">
+      🏷️ Create Offer
+    </button>
+
+    <button class="btn btn-dark" onclick="showScreen('ordersScreen')">
+      📦 View Orders
+    </button>
+
+    <button class="btn btn-dark" onclick="openChat()">
+      💬 Buyer Messages
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ADD PRODUCT ================= -->
+
+<section id="addProductScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="showScreen('sellerScreen')">
+        ← Back
+      </button>
+
+      <div class="header-title">
+        Add Product
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <label class="form-label">
+      Product Name
+    </label>
+
+    <input
+      id="addProductName"
+      class="input"
+      placeholder="Product name"
+    >
+
+    <label class="form-label">
+      Category
+    </label>
+
+    <select id="addCategory" class="input">
+
+      <option>Fashion</option>
+      <option>Electronics</option>
+      <option>Shoes</option>
+      <option>Home</option>
+      <option>Beauty</option>
+      <option>Food</option>
+      <option>Automotive</option>
+      <option>Business</option>
+      <option>Other</option>
+
+    </select>
+
+    <label class="form-label">
+      Regular Price
+    </label>
+
+    <input
+      id="regularPrice"
+      class="input"
+      type="number"
+      placeholder="₹"
+    >
+
+    <label class="form-label">
+      Offer Price
+    </label>
+
+    <input
+      id="offerPrice"
+      class="input"
+      type="number"
+      placeholder="₹"
+    >
+
+    <label class="form-label">
+      Available Stock
+    </label>
+
+    <input
+      id="stock"
+      class="input"
+      type="number"
+      placeholder="Quantity"
+    >
+
+    <label class="form-label">
+      Product Description
+    </label>
+
+    <textarea
+      id="description"
+      class="input"
+      placeholder="Describe your product..."
+    ></textarea>
+
+    <label class="form-label">
+      Wholesale / Bulk
+    </label>
+
+    <select id="bulkAvailable" class="input">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <button class="btn btn-gold" onclick="publishProduct()">
+      Publish Product
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section id="ordersScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Orders
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="bulk-box">
+
+      <h3>📦 No Orders Yet</h3>
+
+      <p class="subtitle">
+        Your purchases and bulk orders will appear here.
+      </p>
+
+      <button class="btn btn-gold" onclick="goHome()">
+        Explore Products
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PROFILE ================= -->
+
+<section id="profileScreen" class="screen">
+
+  <div class="page">
+
+    <div class="header">
+
+      <button class="back" onclick="goHome()">← Back</button>
+
+      <div class="header-title">
+        Profile
+      </div>
+
+      <div></div>
+
+    </div>
+
+    <div class="profile-head">
+
+      <div class="avatar">
+        Z
+      </div>
+
+      <div class="profile-name">
+        ZenOffer User
+      </div>
+
+      <p style="color:#999;margin-top:5px">
+        Buyer Account
+      </p>
+
+    </div>
+
+    <div class="profile-menu">
+
+      <button onclick="showScreen('sellerScreen')">
+        🏪 Become a Seller
+      </button>
+
+      <button onclick="showToast('Saved products')">
+        ❤️ Saved Products
+      </button>
+
+      <button onclick="showScreen('ordersScreen')">
+        📦 My Orders
+      </button>
+
+      <button onclick="showToast('Language settings')">
+        🌐 Language
+      </button>
+
+      <button onclick="showToast('Notification settings')">
+        🔔 Notifications
+      </button>
+
+      <button onclick="showToast('Location settings')">
+        📍 Location
+      </button>
+
+      <button onclick="logout()">
+        🚪 Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TOAST -->
+
+<div id="toast" class="toast"></div>
 
 </div>
 
 
 <script>
 
-function hideAll() {
-  document.querySelectorAll(".screen").forEach(function(screen) {
+/* ================= APP STATE ================= */
+
+let currentPhone = "";
+let currentAuthType = "";
+let currentBulkProduct = "";
+
+
+/* ================= SCREEN SYSTEM ================= */
+
+function showScreen(id){
+
+  document.querySelectorAll(".screen").forEach(function(screen){
     screen.classList.remove("active");
   });
-}
 
-function showLogin() {
-  hideAll();
-  document.getElementById("loginScreen").classList.add("active");
-}
+  const target = document.getElementById(id);
 
-function showSignup() {
-  hideAll();
-  document.getElementById("signupScreen").classList.add("active");
-}
-
-function goBack() {
-  hideAll();
-  document.getElementById("welcome").classList.add("active");
-}
-
-function sendOTP(type) {
-
-  let phone;
-
-  if (type === "login") {
-    phone = document.getElementById("loginPhone").value;
-  } else {
-    phone = document.getElementById("signupPhone").value;
+  if(target){
+    target.classList.add("active");
+    window.scrollTo(0,0);
   }
+}
 
-  if (phone.length !== 10) {
-    alert("Please enter a valid 10-digit mobile number.");
+
+/* ================= AUTH ================= */
+
+function sendOTP(type){
+
+  let inputId = type === "login"
+    ? "loginPhone"
+    : "signupPhone";
+
+  const phone = document.getElementById(inputId).value.trim();
+
+  if(!/^[0-9]{10}$/.test(phone)){
+    showToast("Enter a valid 10-digit mobile number");
     return;
   }
 
-  alert("OTP will be sent to +91 " + phone);
+  currentPhone = phone;
+  currentAuthType = type;
+
+  showScreen("otpScreen");
+
+  showToast("Demo OTP: 1234");
+}
+
+
+function moveOTP(input,index){
+
+  if(input.value.length === 1){
+
+    const next = input.parentElement.children[index];
+
+    if(next){
+      next.focus();
+    }
+
+  }
+}
+
+
+function verifyOTP(){
+
+  const otpInputs = document.querySelectorAll(".otp");
+
+  let otp = "";
+
+  otpInputs.forEach(function(input){
+    otp += input.value;
+  });
+
+  if(otp !== "1234"){
+    showToast("For demo use OTP 1234");
+    return;
+  }
+
+  localStorage.setItem("zenoffer_user",currentPhone);
+
+  showScreen("languageScreen");
+
+  showToast("Mobile verified");
+}
+
+
+/* ================= LANGUAGE ================= */
+
+function saveLanguage(){
+
+  const selected =
+    document.querySelector('input[name="language"]:checked');
+
+  if(!selected){
+    showToast("Select a language");
+    return;
+  }
+
+  localStorage.setItem(
+    "zenoffer_language",
+    selected.value
+  );
+
+  showScreen("permissionsScreen");
+}
+
+
+/* ================= LOCATION ================= */
+
+function requestLocation(){
+
+  showScreen("locationScreen");
+}
+
+
+function enableLocation(){
+
+  if(!navigator.geolocation){
+
+    showToast("Location not supported");
+
+    goHome();
+
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      document.getElementById("locationText").innerText =
+        "📍 Location enabled";
+
+      localStorage.setItem("zenoffer_location","enabled");
+
+      goHome();
+
+    },
+
+    function(){
+
+      showToast("Location permission not allowed");
+
+      goHome();
+
+    }
+
+  );
+}
+
+
+/* ================= HOME ================= */
+
+function goHome(){
+
+  showScreen("homeScreen");
 
 }
+
+
+/* ================= SEARCH ================= */
+
+function searchEnter(event){
+
+  if(event.key === "Enter"){
+    searchProducts();
+  }
+
+}
+
+
+function searchProducts(){
+
+  const value =
+    document.getElementById("searchInput").value.trim();
+
+  if(value === ""){
+
+    showToast("Enter a product name");
+
+    return;
+  }
+
+  showToast("Searching: " + value);
+
+}
+
+
+function categorySearch(category){
+
+  showScreen("offersScreen");
+
+  showToast("Showing " + category + " products");
+
+}
+
+
+/* ================= PRODUCT ================= */
+
+function openProduct(name){
+
+  document.getElementById("productTitle").innerText = name;
+
+  if(name.toLowerCase().includes("earbud")){
+    document.getElementById("productLargeImage").innerText = "🎧";
+  }
+  else if(name.toLowerCase().includes("shoe")){
+    document.getElementById("productLargeImage").innerText = "👟";
+  }
+  else if(name.toLowerCase().includes("watch")){
+    document.getElementById("productLargeImage").innerText = "⌚";
+  }
+  else if(name.toLowerCase().includes("bag")){
+    document.getElementById("productLargeImage").innerText = "👜";
+  }
+  else{
+    document.getElementById("productLargeImage").innerText = "👕";
+  }
+
+  showScreen("productScreen");
+
+}
+
+
+/* ================= BULK ================= */
+
+function openBulkOrder(product){
+
+  currentBulkProduct = product;
+
+  document.getElementById("bulkProductName").innerText =
+    product;
+
+  showScreen("bulkOrderScreen");
+
+}
+
+
+function sendBulkRequest(){
+
+  const quantity =
+    document.getElementById("bulkQuantity").value;
+
+  const location =
+    document.getElementById("bulkLocation").value;
+
+  if(!quantity){
+
+    showToast("Enter quantity");
+
+    return;
+  }
+
+  if(!location){
+
+    showToast("Enter delivery location");
+
+    return;
+  }
+
+  showToast("Bulk request sent to seller");
+
+  setTimeout(function(){
+
+    showScreen("chatScreen");
+
+  },800);
+
+}
+
+
+/* ================= CHAT ================= */
+
+function openChat(){
+
+  showScreen("chatScreen");
+
+}
+
+
+function sendMessage(){
+
+  const input =
+    document.getElementById("chatMessage");
+
+  const text = input.value.trim();
+
+  if(text === ""){
+    return;
+  }
+
+  const box =
+    document.getElementById("chatBox");
+
+  const message =
+    document.createElement("div");
+
+  message.className = "message buyer";
+
+  message.innerText = text;
+
+  box.appendChild(message);
+
+  input.value = "";
+
+  box.scrollTop = box.scrollHeight;
+
+}
+
+
+/* ================= ORDER ================= */
+
+function placeOrder(){
+
+  showToast("Demo order created");
+
+  setTimeout(function(){
+
+    showScreen("ordersScreen");
+
+  },800);
+
+}
+
+
+/* ================= SELLER ================= */
+
+function publishProduct(){
+
+  const name =
+    document.getElementById("addProductName").value.trim();
+
+  const price =
+    document.getElementById("regularPrice").value;
+
+  if(name === ""){
+
+    showToast("Enter product name");
+
+    return;
+  }
+
+  if(price === ""){
+
+    showToast("Enter regular price");
+
+    return;
+  }
+
+  showToast("Product published successfully");
+
+  setTimeout(function(){
+
+    showScreen("sellerScreen");
+
+  },800);
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(function(){
+
+      toast.style.display = "none";
+
+    },2500);
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout(){
+
+  localStorage.removeItem("zenoffer_user");
+
+  showScreen("welcomeScreen");
+
+  showToast("Logged out");
+
+}
+
+
+/* ================= START ================= */
+
+window.addEventListener("load",function(){
+
+  const user =
+    localStorage.getItem("zenoffer_user");
+
+  if(user){
+
+    goHome();
+
+  }
+
+});
 
 </script>
 
