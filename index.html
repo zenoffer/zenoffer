@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>ZenOffer</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#111}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:480px;min-height:100vh;margin:auto;background:#fff}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+.page{padding:18px 16px 90px}
+.gold{color:#f5b82e}
+.btn{width:100%;padding:14px;border:0;border-radius:9px;margin-top:12px;font-weight:bold}
+.btn-gold{background:#f5b82e;color:#111}
+.btn-dark{background:#111;color:#fff}
+.btn-outline{background:#fff;color:#111;border:1px solid #ddd}
+.back{background:none;border:0;color:#555;font-size:15px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.header-title{font-size:20px;font-weight:700}
+
+/* WELCOME */
+.welcome{min-height:100vh;padding:35px 25px;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.logo{font-size:52px;font-weight:900;color:#f5b82e}
+.brand{font-size:36px;font-weight:800}
+.brand span{color:#f5b82e}
+.tagline{color:#777;margin:8px 0 45px}
+
+/* AUTH */
+.auth{padding:28px 22px}
+.auth-logo{text-align:center;margin:25px 0 35px}
+.auth-logo .logo{font-size:65px}
+.auth-logo .brand{font-size:30px}
+.auth h2{font-size:25px;margin-bottom:7px}
+.subtitle{color:#777;font-size:14px;margin:7px 0 20px}
+.phone-row{display:flex;gap:8px}
+.country{width:72px;padding:14px;border:1px solid #ddd;border-radius:9px}
+.input{width:100%;padding:14px;border:1px solid #ddd;border-radius:9px;outline:0;background:#fff}
+.input:focus{border-color:#f5b82e}
+.phone-row .input{margin:0}
+.otp-row{display:flex;gap:8px;margin:20px 0}
+.otp{width:25%;padding:15px;text-align:center;border:1px solid #ddd;border-radius:9px}
+
+/* LANGUAGE */
+.language-list{max-height:65vh;overflow:auto}
+.language{display:flex;align-items:center;padding:14px;margin-bottom:9px;border:1px solid #e3e3e3;border-radius:10px}
+.language input{margin-right:12px;accent-color:#f5b82e}
+
+/* HOME */
+.home-head{padding:16px;background:#fff;position:sticky;top:0;z-index:10}
+.top{display:flex;justify-content:space-between;align-items:center}
+.small-brand{font-size:25px;font-weight:800}
+.small-brand span{color:#f5b82e}
+.location{font-size:12px;color:#777;margin-top:4px}
+.profile-btn{border:0;background:#f2f2f2;width:40px;height:40px;border-radius:50%}
+.search{display:flex;margin-top:14px;background:#f2f2f2;border-radius:9px;overflow:hidden}
+.search input{flex:1;border:0;background:none;padding:13px;outline:0}
+.search button{width:48px;border:0;background:#f5b82e}
+.banner{margin:12px 16px;padding:20px;border-radius:14px;background:#111;color:#fff}
+.banner h2{color:#f5b82e}
+.banner p{font-size:13px;color:#ccc;margin-top:6px}
+.section{padding:8px 16px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
+.section-title h3{font-size:18px}
+.see{border:0;background:none;color:#d99d00}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cat{background:#fff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;text-align:center}
+.cat img{width:100%;height:72px;object-fit:cover}
+.cat span{display:block;padding:7px 3px;font-size:11px}
+
+/* PRODUCTS */
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.product{background:#fff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden}
+.product img{width:100%;height:165px;object-fit:cover;background:#eee}
+.pinfo{padding:10px}
+.pname{font-size:14px;font-weight:600;line-height:1.3}
+.old{text-decoration:line-through;color:#999;font-size:12px;margin-top:5px}
+.price{font-size:19px;font-weight:700;margin-top:2px}
+.offer{color:#168a43;font-size:12px;margin-top:4px}
+.seller{color:#777;font-size:11px;margin-top:5px}
+
+/* PRODUCT */
+.big-img{width:100%;height:300px;object-fit:cover;border-radius:12px}
+.big-title{font-size:24px;font-weight:700;margin-top:15px}
+.big-price{font-size:29px;font-weight:800;color:#d99d00;margin-top:8px}
+.rating{margin-top:8px;color:#d99d00}
+
+/* BOTTOM */
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:64px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;z-index:20}
+.nav{border:0;background:none;color:#777;font-size:11px}
+.nav.active{color:#d99d00;font-weight:bold}
+.nav img{display:block;width:22px;height:22px;object-fit:contain;margin:auto auto 3px}
+
+/* SELLER */
+.trial{padding:17px;background:#fff8df;border:1px solid #f0cf6a;border-radius:12px;margin-bottom:16px}
+.trial strong{color:#b77b00}
+.dash{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dash-card{padding:18px;background:#f7f7f7;border-radius:10px}
+.dash-card strong{font-size:25px}
+.dash-card p{font-size:12px;color:#777;margin-top:5px}
+
+/* BULK */
+.bulk{border:1px solid #ddd;border-radius:12px;padding:16px;margin-bottom:12px}
+.bulk-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}
+.bulk-row:last-child{border:0}
+
+/* PROFILE */
+.profile{text-align:center;padding:25px}
+.avatar{width:75px;height:75px;border-radius:50%;background:#111;color:#f5b82e;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;margin:auto}
+.menu{margin-top:18px;border:1px solid #ddd;border-radius:12px;overflow:hidden}
+.menu button{width:100%;padding:16px;background:#fff;border:0;border-bottom:1px solid #eee;text-align:left}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:13px;display:none;z-index:100}
+
+/* EMPTY */
+.empty{text-align:center;padding:50px 20px;color:#777}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- WELCOME -->
+<section id="welcome" class="screen active">
+<div class="welcome">
+<div class="logo">Z</div>
+<div class="brand">Zen<span>Offer</span></div>
+<div class="tagline">Speedy Deals, Happy Feels</div>
+<button class="btn btn-gold" onclick="show('login')">Login</button>
+<button class="btn btn-outline" onclick="show('signup')">Sign Up</button>
+</div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="screen">
+<div class="auth">
+<button class="back" onclick="show('welcome')">← Back</button>
+<div class="auth-logo"><div class="logo">Z</div><div class="brand">Zen<span>Offer</span></div></div>
+<h2>Welcome Back</h2>
+<p class="subtitle">Login with your mobile number</p>
+<div class="phone-row">
+<div class="country">+91</div>
+<input id="loginPhone" class="input" maxlength="10" type="tel" placeholder="Mobile Number">
+</div>
+<button class="btn btn-gold" onclick="sendOTP()">Send OTP</button>
+</div>
+</section>
+
+<!-- SIGNUP -->
+<section id="signup" class="screen">
+<div class="auth">
+<button class="back" onclick="show('welcome')">← Back</button>
+<div class="auth-logo"><div class="logo">Z</div><div class="brand">Zen<span>Offer</span></div></div>
+<h2>Create Account</h2>
+<p class="subtitle">Join ZenOffer</p>
+<div class="phone-row">
+<div class="country">+91</div>
+<input id="signupPhone" class="input" maxlength="10" type="tel" placeholder="Mobile Number">
+</div>
+<button class="btn btn-gold" onclick="sendOTP()">Send OTP</button>
+</div>
+</section>
+
+<!-- OTP -->
+<section id="otp" class="screen">
+<div class="auth">
+<button class="back" onclick="show('welcome')">← Back</button>
+<h2>Verify Mobile</h2>
+<p class="subtitle">Demo OTP: 1234</p>
+<div class="otp-row">
+<input class="otp" maxlength="1">
+<input class="otp" maxlength="1">
+<input class="otp" maxlength="1">
+<input class="otp" maxlength="1">
+</div>
+<button class="btn btn-gold" onclick="verifyOTP()">Verify OTP</button>
+</div>
+</section>
+
+<!-- LANGUAGE -->
+<section id="language" class="screen">
+<div class="page">
+<h2>Choose Your Language</h2>
+<p class="subtitle">Select your preferred language</p>
+<div class="language-list">
+<label class="language"><input type="radio" name="lang" value="English" checked>English</label>
+<label class="language"><input type="radio" name="lang" value="Tamil">தமிழ்</label>
+<label class="language"><input type="radio" name="lang" value="Hindi">हिन्दी</label>
+<label class="language"><input type="radio" name="lang" value="Telugu">తెలుగు</label>
+<label class="language"><input type="radio" name="lang" value="Malayalam">മലയാളം</label>
+<label class="language"><input type="radio" name="lang" value="Kannada">ಕನ್ನಡ</label>
+<label class="language"><input type="radio" name="lang" value="Bengali">বাংলা</label>
+<label class="language"><input type="radio" name="lang" value="Spanish">Español</label>
+<label class="language"><input type="radio" name="lang" value="Arabic">العربية</label>
+<label class="language"><input type="radio" name="lang" value="Chinese">中文</label>
+<label class="language"><input type="radio" name="lang" value="Japanese">日本語</label>
+</div>
+<button class="btn btn-gold" onclick="saveLang()">Continue</button>
+</div>
+</section>
+
+<!-- PERMISSION -->
+<section id="permission" class="screen">
+<div class="welcome">
+<h1>Stay Updated</h1>
+<p class="subtitle">Get offer and order notifications.</p>
+<button class="btn btn-gold" onclick="show('location')">Allow Notifications</button>
+<button class="btn btn-outline" onclick="show('location')">Maybe Later</button>
+</div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="screen">
+<div class="welcome">
+<h1>Discover Offers Near You</h1>
+<p class="subtitle">Find nearby shops and sellers.</p>
+<button class="btn btn-gold" onclick="enableLocation()">Turn On Location</button>
+<button class="btn btn-outline" onclick="goHome()">Maybe Later</button>
+</div>
+</section>
+
+<!-- HOME -->
+<section id="home" class="screen">
+<div class="home-head">
+<div class="top">
+<div>
+<div class="small-brand">Zen<span>Offer</span></div>
+<div id="locText" class="location">Location not selected</div>
+</div>
+<button class="profile-btn" onclick="show('profile')">P</button>
+</div>
+<div class="search">
+<input id="search" placeholder="Search products, offers, wholesale..." onkeydown="enterSearch(event)">
+<button onclick="searchProducts()">Search</button>
+</div>
+</div>
+
+<div class="banner">
+<h2>Best Offers Near You</h2>
+<p>Discover offers from local and online sellers.</p>
+<button class="btn btn-gold" onclick="show('offers')">Explore Offers</button>
+</div>
+
+<div class="section">
+<div class="section-title"><h3>All Categories</h3><button class="see" onclick="show('categories')">View All</button></div>
+<div class="cat-grid" id="homeCats"></div>
+</div>
+
+<div class="section">
+<div class="section-title"><h3>Today's Offers</h3><button class="see" onclick="show('offers')">See All</button></div>
+<div id="homeProducts" class="product-grid"></div>
+</div>
+
+<div class="section">
+<div class="section-title"><h3>Wholesale & Bulk</h3><button class="see" onclick="show('wholesale')">Explore</button></div>
+<div id="homeBulk" class="product-grid"></div>
+</div>
+
+<div class="bottom">
+<button class="nav active" onclick="goHome()">Home</button>
+<button class="nav" onclick="show('categories')">Categories</button>
+<button class="nav" onclick="show('offers')">Offers</button>
+<button class="nav" onclick="show('orders')">Orders</button>
+<button class="nav" onclick="show('profile')">Profile</button>
+</div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">All Categories</div><span></span></div>
+<div id="allCats" class="cat-grid"></div>
+</div>
+</section>
+
+<!-- OFFERS -->
+<section id="offers" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Offers</div><span></span></div>
+<div id="offerProducts" class="product-grid"></div>
+</div>
+</section>
+
+<!-- WHOLESALE -->
+<section id="wholesale" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Wholesale & Bulk</div><span></span></div>
+<div id="bulkProducts"></div>
+</div>
+</section>
+
+<!-- PRODUCT -->
+<section id="product" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Product</div><span></span></div>
+<img id="bigImg" class="big-img">
+<div id="bigName" class="big-title"></div>
+<div class="rating">4.8 ★ Verified Seller</div>
+<div id="bigOld" class="old"></div>
+<div id="bigPrice" class="big-price"></div>
+<div id="bigOffer" class="offer"></div>
+<button class="btn btn-gold" onclick="buyNow()">Buy Now</button>
+<button class="btn btn-outline" onclick="openBulk()">Bulk Order</button>
+<button class="btn btn-dark" onclick="show('chat')">Contact Seller</button>
+</div>
+</section>
+
+<!-- BULK ORDER -->
+<section id="bulkOrder" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Bulk Order</div><span></span></div>
+<h3 id="bulkName"></h3>
+<label class="subtitle">Quantity</label>
+<input id="bulkQty" class="input" type="number" placeholder="Example: 500">
+<label class="subtitle">Location</label>
+<input id="bulkLoc" class="input" placeholder="City / Country">
+<label class="subtitle">Requirements</label>
+<textarea id="bulkReq" class="input" rows="5" placeholder="Size, colour, customization..."></textarea>
+<button class="btn btn-gold" onclick="sendBulk()">Send Bulk Request</button>
+</div>
+</section>
+
+<!-- CHAT -->
+<section id="chat" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="show('product')">← Back</button><div class="header-title">Seller Chat</div><span></span></div>
+<div id="messages"></div>
+<div style="display:flex;gap:8px;margin-top:20px">
+<input id="msg" class="input" placeholder="Type a message...">
+<button class="btn btn-gold" style="width:80px;margin-top:0" onclick="sendMsg()">Send</button>
+</div>
+</div>
+</section>
+
+<!-- SELLER -->
+<section id="seller" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Seller Dashboard</div><span></span></div>
+<div class="trial"><strong>2 Months FREE Trial</strong><p>0% ZenOffer commission during your first 2 months.</p></div>
+<div class="dash">
+<div class="dash-card"><strong id="countProducts">0</strong><p>Products</p></div>
+<div class="dash-card"><strong id="countOrders">0</strong><p>Orders</p></div>
+<div class="dash-card"><strong id="countViews">0</strong><p>Views</p></div>
+<div class="dash-card"><strong id="countEarn">₹0</strong><p>Earnings</p></div>
+</div>
+<button class="btn btn-gold" onclick="show('addProduct')">Add Product</button>
+<button class="btn btn-outline" onclick="showToast('Offer creator ready')">Create Offer</button>
+<button class="btn btn-dark" onclick="show('orders')">View Orders</button>
+</div>
+</section>
+
+<!-- ADD PRODUCT -->
+<section id="addProduct" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="show('seller')">← Back</button><div class="header-title">Add Product</div><span></span></div>
+
+<label class="subtitle">Product Image URL</label>
+<input id="newImg" class="input" placeholder="Paste image URL">
+
+<label class="subtitle">Product Name</label>
+<input id="newName" class="input" placeholder="Product name">
+
+<label class="subtitle">Category</label>
+<select id="newCat" class="input">
+<option>Fashion</option><option>Electronics</option><option>Shoes</option><option>Home</option><option>Beauty</option><option>Grocery</option><option>Kids</option><option>Furniture</option><option>Automotive</option><option>Sports</option>
+</select>
+
+<label class="subtitle">Regular Price</label>
+<input id="newRegular" class="input" type="number" placeholder="₹">
+
+<label class="subtitle">Offer Price</label>
+<input id="newOffer" class="input" type="number" placeholder="₹">
+
+<label class="subtitle">Stock Quantity</label>
+<input id="newStock" class="input" type="number" placeholder="Quantity">
+
+<label class="subtitle">Description</label>
+<textarea id="newDesc" class="input" rows="4" placeholder="Product description"></textarea>
+
+<label class="subtitle">Wholesale / Bulk</label>
+<select id="newBulk" class="input"><option>Yes</option><option>No</option></select>
+
+<button class="btn btn-gold" onclick="publishProduct()">Publish Product</button>
+</div>
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Orders</div><span></span></div>
+<div id="ordersList" class="empty">No orders yet.</div>
+</div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="screen">
+<div class="page">
+<div class="header"><button class="back" onclick="goHome()">← Back</button><div class="header-title">Profile</div><span></span></div>
+<div class="profile">
+<div class="avatar">Z</div>
+<h2 style="margin-top:10px">ZenOffer User</h2>
+<p class="subtitle">Buyer Account</p>
+</div>
+<div class="menu">
+<button onclick="show('seller')">Become a Seller</button>
+<button onclick="show('orders')">My Orders</button>
+<button onclick="showToast('Saved products coming soon')">Saved Products</button>
+<button onclick="showToast('Language settings')">Language</button>
+<button onclick="showToast('Notification settings')">Notifications</button>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
+</section>
+
+<div id="toast" class="toast"></div>
+</div>
+
+<script>
+const IMG={
+fashion:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80",
+electronics:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80",
+shoes:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+home:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80",
+beauty:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=80",
+grocery:"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80",
+kids:"https://images.unsplash.com/photo-1599623560574-39d485900c95?auto=format&fit=crop&w=700&q=80",
+furniture:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=700&q=80",
+automotive:"https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=700&q=80",
+sports:"https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=700&q=80"
+};
+
+const categories=[
+["Fashion","fashion"],["Electronics","electronics"],["Shoes","shoes"],["Home","home"],
+["Beauty","beauty"],["Grocery","grocery"],["Kids","kids"],["Furniture","furniture"],
+["Automotive","automotive"],["Sports","sports"]
+];
+
+let products=JSON.parse(localStorage.getItem("zenoffer_products")||"[]");
+let orders=JSON.parse(localStorage.getItem("zenoffer_orders")||"[]");
+let currentProduct=null;
+
+function show(id){
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+window.scrollTo(0,0);
+if(id==="home")renderHome();
+if(id==="seller")updateSeller();
+if(id==="offers")renderOffers();
+if(id==="wholesale")renderWholesale();
+if(id==="orders")renderOrders();
+}
+
+function goHome(){show("home")}
+
+function toast(t){
+const x=document.getElementById("toast");
+x.innerText=t;x.style.display="block";
+clearTimeout(window.tt);
+window.tt=setTimeout(()=>x.style.display="none",2200);
+}
+function showToast(t){toast(t)}
+
+function sendOTP(){
+let a=document.getElementById("loginPhone").value;
+let b=document.getElementById("signupPhone").value;
+let phone=a||b;
+if(!/^[0-9]{10}$/.test(phone)){toast("Enter valid 10 digit number");return}
+localStorage.setItem("zenoffer_phone",phone);
+show("otp");
+toast("Demo OTP is 1234");
+}
+
+function verifyOTP(){
+let v=[...document.querySelectorAll(".otp")].map(x=>x.value).join("");
+if(v!=="1234"){toast("Use OTP 1234");return}
+show("language");
+}
+
+document.querySelectorAll(".otp").forEach((x,i)=>{
+x.addEventListener("input",()=>{
+if(x.value&&i<3)document.querySelectorAll(".otp")[i+1].focus()
+})
+});
+
+function saveLang(){
+let l=document.querySelector('input[name="lang"]:checked').value;
+localStorage.setItem("zenoffer_language",l);
+show("permission");
+}
+
+function enableLocation(){
+if(!navigator.geolocation){goHome();return}
+navigator.geolocation.getCurrentPosition(()=>{
+document.getElementById("locText").innerText="Location enabled";
+localStorage.setItem("zenoffer_location","yes");
+goHome();
+},()=>goHome());
+}
+
+function catCard(c){
+return `<button class="cat" onclick="categorySearch('${c[0]}')">
+<img src="${IMG[c[1]]}">
+<span>${c[0]}</span></button>`;
+}
+
+function renderCategories(){
+document.getElementById("homeCats").innerHTML=categories.slice(0,8).map(catCard).join("");
+document.getElementById("allCats").innerHTML=categories.map(catCard).join("");
+}
+
+function sampleProducts(){
+return[
+{name:"Premium Fashion T-Shirt",cat:"Fashion",regular:999,offer:599,img:IMG.fashion,bulk:"Yes",seller:"Local Fashion Store"},
+{name:"Smartphone",cat:"Electronics",regular:19999,offer:15999,img:IMG.electronics,bulk:"Yes",seller:"Tech Store"},
+{name:"Running Shoes",cat:"Shoes",regular:2999,offer:1499,img:IMG.shoes,bulk:"Yes",seller:"Shoe Store"},
+{name:"Modern Sofa",cat:"Home",regular:15999,offer:11999,img:IMG.home,bulk:"No",seller:"Home Store"}
+];
+}
+
+function allProducts(){
+return [...sampleProducts(),...products];
+}
+
+function card(p){
+return `<div class="product" onclick='openProduct(${JSON.stringify(p)})'>
+<img src="${p.img}">
+<div class="pinfo">
+<div class="pname">${p.name}</div>
+<div class="old">₹${Number(p.regular).toLocaleString()}</div>
+<div class="price">₹${Number(p.offer).toLocaleString()}</div>
+<div class="offer">${Math.round((1-p.offer/p.regular)*100)}% OFF</div>
+<div class="seller">${p.seller||"ZenOffer Seller"}</div>
+</div></div>`;
+}
+
+function renderHome(){
+renderCategories();
+let list=allProducts();
+document.getElementById("homeProducts").innerHTML=list.slice(0,6).map(card).join("");
+document.getElementById("homeBulk").innerHTML=list.filter(x=>x.bulk==="Yes").slice(0,4).map(card).join("");
+}
+
+function renderOffers(){
+document.getElementById("offerProducts").innerHTML=allProducts().map(card).join("");
+}
+
+function renderWholesale(){
+let list=allProducts().filter(x=>x.bulk==="Yes");
+document.getElementById("bulkProducts").innerHTML=list.length?
+list.map(p=>`<div class="bulk">
+<h3>${p.name}</h3>
+<p class="subtitle">${p.seller||"Seller"}</p>
+<div class="bulk-row"><span>Bulk available</span><strong>Yes</strong></div>
+<div class="bulk-row"><span>Offer price</span><strong>₹${Number(p.offer).toLocaleString()}</strong></div>
+<button class="btn btn-gold" onclick='openBulkFor(${JSON.stringify(p)})'>Request Bulk Order</button>
+</div>`).join(""):"<div class='empty'>No wholesale products yet.</div>";
+}
+
+function openProduct(p){
+currentProduct=p;
+document.getElementById("bigImg").src=p.img;
+document.getElementById("bigName").innerText=p.name;
+document.getElementById("bigOld").innerText="₹"+Number(p.regular).toLocaleString();
+document.getElementById("bigPrice").innerText="₹"+Number(p.offer).toLocaleString();
+document.getElementById("bigOffer").innerText=Math.round((1-p.offer/p.regular)*100)+"% OFF";
+show("product");
+}
+
+function categorySearch(c){
+let list=allProducts().filter(x=>x.cat===c);
+document.getElementById("offerProducts").innerHTML=list.length?list.map(card).join(""):"<div class='empty'>No products in this category yet.</div>";
+show("offers");
+}
+
+function searchProducts(){
+let q=document.getElementById("search").value.toLowerCase().trim();
+if(!q){toast("Type something to search");return}
+let list=allProducts().filter(p=>(p.name+" "+p.cat+" "+p.seller).toLowerCase().includes(q));
+document.getElementById("offerProducts").innerHTML=list.length?list.map(card).join(""):"<div class='empty'>No products found.</div>";
+show("offers");
+}
+function enterSearch(e){if(e.key==="Enter")searchProducts()}
+
+function updateSeller(){
+document.getElementById("countProducts").innerText=products.length;
+document.getElementById("countOrders").innerText=orders.length;
+document.getElementById("countViews").innerText=products.reduce((a,p)=>a+(p.views||0),0);
+document.getElementById("countEarn").innerText="₹"+orders.reduce((a,o)=>a+Number(o.price||0),0).toLocaleString();
+}
+
+function publishProduct(){
+let name=document.getElementById("newName").value.trim();
+let img=document.getElementById("newImg").value.trim();
+let cat=document.getElementById("newCat").value;
+let regular=Number(document.getElementById("newRegular").value);
+let offer=Number(document.getElementById("newOffer").value);
+let stock=Number(document.getElementById("newStock").value);
+let desc=document.getElementById("newDesc").value;
+let bulk=document.getElementById("newBulk").value;
+
+if(!name||!regular||!offer||!stock){toast("Fill all required fields");return}
+
+if(!img)img=IMG[cat.toLowerCase()]||IMG.fashion;
+
+let p={
+id:Date.now(),
+name,cat,regular,offer,stock,desc,bulk,img,
+seller:"Your Store",
+views:0
+};
+
+products.push(p);
+localStorage.setItem("zenoffer_products",JSON.stringify(products));
+
+document.getElementById("newName").value="";
+document.getElementById("newImg").value="";
+document.getElementById("newRegular").value="";
+document.getElementById("newOffer").value="";
+document.getElementById("newStock").value="";
+document.getElementById("newDesc").value="";
+
+updateSeller();
+renderHome();
+toast("Product published successfully");
+
+setTimeout(()=>show("seller"),700);
+}
+
+function buyNow(){
+if(!currentProduct)return;
+orders.push({
+id:Date.now(),
+name:currentProduct.name,
+price:currentProduct.offer
+});
+localStorage.setItem("zenoffer_orders",JSON.stringify(orders));
+toast("Order placed successfully");
+}
+
+function renderOrders(){
+if(!orders.length){
+document.getElementById("ordersList").innerHTML="<div class='empty'>No orders yet.</div>";
+return;
+}
+document.getElementById("ordersList").innerHTML=orders.map(o=>`
+<div class="bulk">
+<strong>${o.name}</strong>
+<p class="subtitle">Order #${o.id}</p>
+<div class="price">₹${Number(o.price).toLocaleString()}</div>
+</div>`).join("");
+}
+
+function openBulk(){
+if(!currentProduct)return;
+openBulkFor(currentProduct);
+}
+
+function openBulkFor(p){
+currentProduct=p;
+document.getElementById("bulkName").innerText=p.name;
+show("bulkOrder");
+}
+
+function sendBulk(){
+let q=document.getElementById("bulkQty").value;
+let l=document.getElementById("bulkLoc").value;
+if(!q||!l){toast("Enter quantity and location");return}
+toast("Bulk request sent to seller");
+setTimeout(()=>show("chat"),700);
+}
+
+function sendMsg(){
+let i=document.getElementById("msg");
+let t=i.value.trim();
+if(!t)return;
+let box=document.getElementById("messages");
+box.innerHTML+=`<div style="background:#111;color:#fff;padding:12px;border-radius:10px;margin:8px 0">${t}</div>`;
+i.value="";
+}
+
+function logout(){
+localStorage.removeItem("zenoffer_phone");
+show("welcome");
+toast("Logged out");
+}
+
+renderCategories();
+renderHome();
+</script>
+</body>
+</html>
